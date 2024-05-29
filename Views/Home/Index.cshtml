@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('keyup', function () {
+            var filter = this.value.toLowerCase();
+            var foto = document.querySelectorAll('.MyFoto');
+
+            foto.forEach(function (foto) {
+                var title = foto.querySelector('.filter-text').innerText.toLowerCase();
+                if (title.includes(filter)) {
+                    foto.classList.remove('d-none');
+                } else {
+                    foto.classList.add('d-none');
+                }
+            });
+        });
+    });
+</script>
+
+<h1>Foto Visibili</h1>
+
+<div>
+    <input type="text" id="searchInput" name="search" value="" placeholder="Foto" />
+</div>
+
+<h1>Invia un Messaggio</h1>
+<form onsubmit="inviaMessaggio(event)" method="post">
+    <div class="mb-3">
+        <strong>Email:</strong>
+        <input id="email" type="email" class="d-block w-100" required />
+    </div>
+    <div class="mb-3">
+        <strong>Messaggio:</strong>
+        <textarea id="testo" class="d-block w-100" required></textarea>
+    </div>
+    <div class="mb-3">
+        <input type="submit" class="btn btn-success" value="Invia" />
+    </div>
+</form>
+
+<div id="fotoContainer">
+    <!-- Container per foto -->
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    function inviaMessaggio(evt) {
+        evt.preventDefault();
+        var email = document.getElementById('email').value;
+        var testo = document.getElementById('testo').value;
+
+        axios.post('https://localhost:7192/api/FotoWebApi/SendMessage', {
+            email: email,
+            testo: testo
+        })
+            .then(function (response) {
+                console.log('Messaggio inviato con successo:', response.data);
+            })
+            .catch(function (error) {
+                console.error('Errore durante l\'invio del messaggio:', error);
+            });
+    }
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const fotoContainer = document.getElementById('fotoContainer');
+
+        function fetchFotos() {
+            fetch('/api/FotoWebApi/GetFotos')
+                .then(response => response.json())
+                .then(data => displayFotos(data))
+                .catch(error => console.error('Errore:', error));
+        }
+
+        function displayFotos(fotos) {
+            fotoContainer.innerHTML = '';
+            fotos.forEach(foto => {
+                const fotoDiv = document.createElement('div');
+                fotoDiv.classList.add('MyFoto');
+                const categorieList = foto.categorie.map(categoria => `<li>${categoria.nome}</li>`).join('');
+
+                fotoDiv.innerHTML = `
+                    <h4 class = "filter-text">${foto.nome}</h4>
+                    <p>${foto.descrizione}</p>
+                    ${foto.imgSrc ? `<img src="${foto.imgSrc}" alt="${foto.nome}" />` : ''}
+                    <div>
+                        <ul>${categorieList}</ul>
+                    </div>
+                `;
+                fotoContainer.appendChild(fotoDiv);
+            });
+        }
+
+        fetchFotos();
+    });
+</script>

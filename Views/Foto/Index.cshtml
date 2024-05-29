@@ -1,0 +1,81 @@
+﻿@model List<Foto>
+@{
+    ViewData["Title"] = "Foto";
+}
+
+
+@if (User.IsInRole("ADMIN"))
+{
+    <h1>Le Foto:</h1>
+    <div>
+        <input type="text" id="searchInput" name="search" value="" placeholder="Foto" />
+    </div>
+
+    @foreach (var foto in Model)
+    {
+            <div class="row MyFoto">
+                <div class="col">
+                    <h4 class="filter-text">@foto.Nome</h4>
+                </div>
+                <div class="col">
+                    <p>@foto.Descrizione</p>
+                </div>
+                <div class="col">
+                    <p>@foto.Visibile</p>
+                </div>
+            
+                <div class="col">
+                    <button>
+                    <a href="@Url.Action("Show", "Foto", new { id = foto.Id } )">MOSTRA</a>
+                    </button>
+                    <button>
+                        <a href="@Url.Action("Update", "Foto", new { id = foto.Id })">MODIFICA FOTO</a>
+                    </button>
+                    <form asp-controller="Foto" asp-action="Delete" asp-route-id="@foto.Id" method="post">
+                        @Html.AntiForgeryToken()
+                        <button>
+                            <input type="submit" value="Elimina" />
+                        </button>
+                    </form>
+                </div>
+            
+            </div>
+    }
+    <div class="row">
+        <div class="col">
+            <button>
+                <a href="@Url.Action("Create", "Foto")">AGGIUNGI FOTO</a>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button>
+                <a href="@Url.Action("Index", "Categoria")">Categoria</a>
+            </button>
+        </div>
+    </div>
+}
+else
+{
+    <h1>Non hai le autorizzazioni necessarie per visitare la pagina</h1>
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('keyup', function () {
+            var filter = this.value.toLowerCase();
+            var foto = document.querySelectorAll('.MyFoto');
+
+            foto.forEach(function (foto) {
+                var title = foto.querySelector('.filter-text').innerText.toLowerCase();
+                if (title.includes(filter)) {
+                    foto.classList.remove('d-none');
+                } else {
+                    foto.classList.add('d-none');
+                }
+            });
+        });
+    });
+</script>

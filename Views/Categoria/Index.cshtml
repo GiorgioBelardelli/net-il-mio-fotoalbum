@@ -1,0 +1,41 @@
+﻿@model List<Categorie>
+@{
+    ViewData["Title"] = "Categorie";
+}
+@if (User.IsInRole("ADMIN"))
+{
+        <div class="row">
+            <div class="col">
+                <button>
+                    <a href="@Url.Action("Create", "Categoria")">AGGIUNGI CATEGORIA</a>
+                </button>
+            </div>
+        </div>
+    @foreach (var categoria in Model)
+    {
+        <div class="row">
+            <div class="col">
+                <h3>@categoria.Nome</h3>
+            </div>
+            <div class="col">
+                <form asp-controller="Categoria" asp-action="Delete" asp-route-id="@categoria.Id" method="post">
+                    @Html.AntiForgeryToken()
+                    <button>
+                        <input type="submit" value="Elimina" />
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    }
+    <div class="row">
+        <div class="col">
+
+            <a href="@Url.Action("Index", "Foto")">BACK</a>
+        </div>
+    </div>
+}
+else
+{
+    <h1>Non hai le autorizzazioni necessarie per visitare la pagina</h1>
+}

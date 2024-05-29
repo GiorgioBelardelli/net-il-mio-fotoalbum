@@ -1,0 +1,47 @@
+﻿@using net_il_mio_fotoalbum.Data;
+@model Foto;
+
+
+@if (User.IsInRole("ADMIN"))
+{
+    <h1>@Model.Nome</h1>
+    <p>@Model.Descrizione</p>
+    @if(Model.ImgSrc == null)
+    {
+        <p>Non é stata caricata nessuna immagine</p>
+    }
+    else
+    {
+        <img src="@Model.ImgSrc" alt=" la foto: @Model.Nome" />    
+    }
+
+    <span>@Model.Visibile</span>
+
+    <div>
+        <strong>Categoria: </strong>
+
+        @if (Model.Categorie?.Count > 0)
+            @foreach (var categoria in Model.Categorie)
+            {
+                <div class="row">
+                    <div class="col">
+                        @categoria.Nome
+                    </div>
+                </div>
+            }
+        else
+        {
+            <p>Non sono state selezionate categorie alla foto</p>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <a href="@Url.Action("Index", "Foto")">BACK</a>
+        </div>
+    </div>
+}
+else
+{
+    <h1>Non hai le autorizzazioni necessarie per visitare la pagina</h1>
+}

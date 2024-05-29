@@ -1,0 +1,30 @@
+﻿@using net_il_mio_fotoalbum.Data;
+@model Categorie
+
+@if (User.IsInRole("ADMIN"))
+{
+<div>
+    <div class="wrapper">
+        <div class="form-container">
+            <form asp-controller="Categoria" asp-action="Create" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                <div>
+                    <label for="inputNome">Scrivi un nome per la categoria: </label>
+                    <br />
+                    <input asp-for="@Model.Nome" class="create-input" id="inputNome" />
+                    <br />
+                    <span asp-validation-for="@Model.Nome" class="text-danger"></span>
+                </div>
+                <div>
+                    <input type="submit" class="submit-button" value="Salva">
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+}
+else
+{
+<h1>Non hai le autorizzazioni necessarie per visitare la pagina</h1>
+}
