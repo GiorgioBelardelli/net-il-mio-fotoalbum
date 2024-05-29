@@ -1,8 +1,7 @@
 ﻿@using net_il_mio_fotoalbum.Data;
 @model FotoFormModel;
 
-@if (User.IsInRole("ADMIN"))
-{
+
     <div>
         <div class="wrapper">
             <div class="form-container">
@@ -58,7 +57,7 @@
 
         </div>
     </div>
-}
+
 else
 {
     <h1>Non hai le autorizzazioni necessarie per visitare la pagina</h1>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace net_il_mio_fotoalbum.Models
@@ -23,6 +24,11 @@ namespace net_il_mio_fotoalbum.Models
 
         //Relazione categoria
         public List<Categorie>? Categorie { get; set; }
+
+        //Relazione con IdentityUser
+        public long? UserId { get; set; }
+        public User? User { get; set; }
+    
 
 
 

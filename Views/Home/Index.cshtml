@@ -1,4 +1,5 @@
-﻿@{
+﻿@model User
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -41,6 +42,10 @@
         <input type="submit" class="btn btn-success" value="Invia" />
     </div>
 </form>
+
+<div>
+    <a href="@Url.Action("Create", "Foto")">AGGIUNGI FOTO</a>
+</div>
 
 <div id="fotoContainer">
     <!-- Container per foto -->

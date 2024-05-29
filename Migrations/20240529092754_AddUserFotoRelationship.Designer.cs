@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using net_il_mio_fotoalbum.Data;
 
@@ -11,9 +12,10 @@ using net_il_mio_fotoalbum.Data;
 namespace net_il_mio_fotoalbum.Migrations
 {
     [DbContext(typeof(FotoContext))]
-    partial class FotoContextModelSnapshot : ModelSnapshot
+    [Migration("20240529092754_AddUserFotoRelationship")]
+    partial class AddUserFotoRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace net_il_mio_fotoalbum.Migrations
 
                     b.HasIndex("FotoId");
 
-                    b.ToTable("CategorieFoto", (string)null);
+                    b.ToTable("CategorieFoto");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -184,7 +186,7 @@ namespace net_il_mio_fotoalbum.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorie", (string)null);
+                    b.ToTable("Categorie");
                 });
 
             modelBuilder.Entity("net_il_mio_fotoalbum.Models.Foto", b =>
@@ -221,7 +223,7 @@ namespace net_il_mio_fotoalbum.Migrations
 
                     b.HasIndex("UserId1");
 
-                    b.ToTable("Photos", (string)null);
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("net_il_mio_fotoalbum.Models.Messaggio", b =>
@@ -247,7 +249,7 @@ namespace net_il_mio_fotoalbum.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("net_il_mio_fotoalbum.Models.User", b =>

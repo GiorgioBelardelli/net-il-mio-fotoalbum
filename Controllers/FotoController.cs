@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using net_il_mio_fotoalbum.Data;
 using net_il_mio_fotoalbum.Models;
+using System.Security.Claims;
 
 namespace net_il_mio_fotoalbum.Controllers
 {
@@ -37,7 +38,7 @@ namespace net_il_mio_fotoalbum.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "ADMIN")]
+        [Authorize]
         public IActionResult Create()
         {
             FotoFormModel model = new FotoFormModel();
@@ -50,15 +51,20 @@ namespace net_il_mio_fotoalbum.Controllers
         //Action che fornisce la view con la form per creare una pizza
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "ADMIN")]
+        [Authorize]
         public IActionResult Create(FotoFormModel data)
         {
+
+
             if (!ModelState.IsValid)
             {
                 data.CreaCategorie();
                 return View("Create", data);
             }
-            data.ImpostaImmagineForm();
+
+           data.ImpostaImmagineForm();
+            
+
             FotoManager.AggiungiFoto(data.Foto, data.CategorieSelezionate);
             return RedirectToAction("Index");
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Hosting;
 using net_il_mio_fotoalbum.Data;
 
@@ -7,6 +8,7 @@ namespace net_il_mio_fotoalbum.Models
     public class FotoFormModel
     {
         public Foto Foto { get; set; }
+        public User? User{ get; set; }
         public List<SelectListItem>? Categorie { get; set; }
         public List<string>? CategorieSelezionate { get; set; }
 

@@ -34,7 +34,7 @@ namespace net_il_mio_fotoalbum.Data
         {
             using FotoContext db = new FotoContext();
             foto.Categorie = new List<Categorie>();
-
+                               
             if (categorieselezionate != null)
             {
                 foreach (var categoria in categorieselezionate)
